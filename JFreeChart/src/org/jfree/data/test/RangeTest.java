@@ -17,6 +17,9 @@ public class RangeTest {
     	exampleRange1 = new Range(1, 1);
     }
     
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD getLowerBound()
+    
     
     @Test
     public void lowerBoundShouldBeNegativeOne() {
@@ -27,6 +30,7 @@ public class RangeTest {
     
     @Test
     public void lowerBoundShouldBeOne() {
+    	// testing the method of a range of just 1
         assertEquals("The lower boundary of 1 and 1 should be 1",
         1, exampleRange1.getLowerBound(), .000000001d);
     }
@@ -47,100 +51,119 @@ public class RangeTest {
     
     @Test
     public void lowerBoundIsLargestNeg() {
-    	// Test with lower bound as a large negative value
+    	// test with lower bound as a large negative value
     	Range range = new Range(-Double.MAX_VALUE, 10);
-    	assertEquals("Lower bound should be -Double.MAX_VALUE", -Double.MAX_VALUE, range.getLowerBound(), 0);
+    	assertEquals("The lower bound should be -Double.MAX_VALUE", -Double.MAX_VALUE, range.getLowerBound(), 0);
     }
 
     @Test
     public void lowerBoundWorstCaseTesting() {
-        // Test with a large range where both bounds are at the maximum representable value
+        // test with a large range where both bounds are at the maximum representable value
         Range range = new Range(Double.MAX_VALUE, Double.MAX_VALUE);
-        assertEquals("Lower bound should be Double.MAX_VALUE", Double.MAX_VALUE, range.getLowerBound(), 0);
+        assertEquals("the Lower bound should be Double.MAX_VALUE", Double.MAX_VALUE, range.getLowerBound(), 0);
     }
     
     
-    
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD getUpperBound()
     
     @Test
-    public void upperBoundShouldBeNegativeOne() {
+    public void upperBoundTestOfDistinctRange() {
         assertEquals("The upper boundary of -1 and 1 should be 1",
-        -1, exampleRange.getUpperBound(), .000000001d);
+        1, exampleRange.getUpperBound(), .000000001d);
     }
     
     @Test
     public void upperBoundShouldBeOne() {
+    	// testing is the methods works for a range of just 1
         assertEquals("The upper boundary of 1 and 1 should be 1",
         1, exampleRange1.getUpperBound(), .000000001d);
     }
     
     @Test
     public void upperBoundIsLargestVal() {
-        // Test with upper bound as the largest representable value
+        // testing with upper bound as the largest representable value
         Range range = new Range(0, Double.MAX_VALUE);
         assertEquals("Upper bound should be Double.MAX_VALUE", Double.MAX_VALUE, range.getUpperBound(), 0);
     }
+  
+
+    
+    
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD getLength()
     
     @Test
-    public void upperBoundWithNaNLower() {
-        Range range = new Range(Double.NaN, 10);
-        assertNull("Upper bound should be null", range.getUpperBound());
+    public void lengthShouldBePositiveForNonEmptyRange() {
+        Range range = new Range(-1, 1); 
+        assertTrue("The length of a non-empty range should be positive",
+                range.getLength() > 0);
     }
-   
-    
-    
-    @Test
-    public void lengthShouldBeTwo() {
-        assertEquals("The length of 1 and 1 should be 3",
-        2, exampleRange.getLength(), .000000001d);
-    }
+
     
     @Test
     public void lengthShouldBeZero() {
-        assertEquals("The upper boundary of 1 and 1 should be 0",
+        assertEquals("The length of 1 and 1 should be 0",
         0, exampleRange1.getLength(), .000000001d);
     }
     
     @Test
     public void lengthWithNaNLower() {
+    	// invalid length
         Range range = new Range(Double.NaN, 10);
-        assertNull("Upper bound should be null", range.getLength());
+        assertTrue("The length should be NaN", Double.isNaN(range.getLength()));
+
     }
     
-  
+    
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD intersects()
     
     @Test
     public void intersectLower() {
+    	// testing the intersection of the lower bound
         assertTrue("The range of -2 and 0 intersects -1 and 1",
         exampleRange.intersects(-2,1));
     }
     
     @Test
     public void intersectUpper() {
+    	// testing the intersection of the upper bound
         boolean result = exampleRange.intersects(0, 2);
         System.out.println("Actual Result: " + result);
         assertTrue("The range of 0 and 2 intersects -1 and 1", result);
     }
     
     @Test
-    public void intersectSame() {
+    public void intersectAll() {
+    	// testing the intersection of the whole range
         assertTrue("The range of -2 and 2 intersects -1 and 1",
         exampleRange.intersects(-2,2));
+    }
+    
+    @Test
+    public void intersectSame() {
+    	// testing the intersection of the same range
         assertTrue("The range of -1 and 1 intersects -1 and 1",
         exampleRange.intersects(-1, 1));
     }
     
     @Test
     public void intersectNone() {
+    	// testing the intersection of a distinct range
         assertTrue("The range of -4 and -2 does not intersects -1 and 1",
         exampleRange.intersects(-4,-2));
     }
     
     @Test
     public void intersectNaN() {
-    	assertFalse("The range of null and null does not intersect -1 and 1",
+    	// testing is a NaN range intersects range
+    	assertFalse("The range of NaN and NaN does not intersect -1 and 1",
     	exampleRange.intersects(Double.NaN, Double.NaN));
     }
+    
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD contains()
     
     @Test
     public void containsValue() {

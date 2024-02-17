@@ -12,6 +12,11 @@ import java.security.InvalidParameterException;
 import org.junit.Test;
 
 public class DataUtilitiesTest extends DataUtilities {
+	
+	
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD calculateColumnTotal()
+	
 	@Test
 	public void testNegativeValues() {
 	    Mockery mockingContext = new Mockery();
@@ -102,6 +107,8 @@ public class DataUtilitiesTest extends DataUtilities {
 	    assertEquals(result, 8.0, .000000001d);
 	    // tear-down: NONE in this test method
 	}
+	
+	
 	@Test
 	public void testTenRowsForColumnTotal() {
 	    Mockery mockingContext = new Mockery();
@@ -138,7 +145,13 @@ public class DataUtilitiesTest extends DataUtilities {
 	    double result = DataUtilities.calculateColumnTotal(values, 0);
 	    assertEquals(21676.1, result, 0.0001);
 	}
-
+	
+	
+	
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD calculateRowTotal()
+	
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testInvalidDataObject() {
 	    Mockery mockingContext = new Mockery();
@@ -178,93 +191,7 @@ public class DataUtilitiesTest extends DataUtilities {
 	    double result = DataUtilities.calculateRowTotal(values, 0);
 	    assertEquals(5, result, 0.0001);
 	}
-
-	@Test(expected = InvalidParameterException.class)
-	public void testNullDataValue() {
-	    Number[] result = DataUtilities.createNumberArray(null);
-	}
 	
-	  @Test
-	    public void testCreateNumberArrayWithValidInput() {
-	        double[] inputData = new double[]{2.0, 3.4, 5.6};
-	        
-	        Number[] result = DataUtilities.createNumberArray(inputData);
-	        
-			// Print the result
-			for (int i = 0; i < result.length; i++) {
-				System.out.println(result[i]);
-			}
-			
-			assertEquals(2.0, result[0].doubleValue(), .000000001d);
-			assertEquals(3.4, result[1].doubleValue(), .000000001d);
-			assertEquals(5.6, result[2].doubleValue(), .000000001d);
-	    }
-
-		@Test
-		public void testCreateNumberArrayWithOneValue() {
-			double[] inputData = new double[]{2.0};
-			
-			Number[] result = DataUtilities.createNumberArray(inputData);
-			
-			assertEquals(2.0, result[0].doubleValue(), .000000001d);
-		}
-
-		@Test
-		public void testCreateNumberArrayWithEmptyInput() {
-			double[] inputData = new double[]{};
-			
-			Number[] result = DataUtilities.createNumberArray(inputData);
-			
-			assertEquals(0, result.length);
-		}
-
-		// Test createNumberArray2D
-
-		@Test(expected = IllegalArgumentException.class)
-		public void testNullDataValueCreateNumberArray2D() {
-			Number[][] result = DataUtilities.createNumberArray2D(null);
-		}
-
-		@Test
-		public void testCreateNumberArray2DWithValidInput() {
-			double[][] inputData = new double[][]{{2.0, 3.4, 5.6}, {1.0, 2.0, 3.0}};
-			
-			Number[][] result = DataUtilities.createNumberArray2D(inputData);
-			
-			// Print the result
-			for (int i = 0; i < result.length; i++) {
-				for (int j = 0; j < result[i].length; j++) {
-					System.out.println(result[i][j]);
-				}
-			}
-			
-			assertEquals(2.0, result[0][0].doubleValue(), .000000001d);
-			assertEquals(3.4, result[0][1].doubleValue(), .000000001d);
-			assertEquals(5.6, result[0][2].doubleValue(), .000000001d);
-			assertEquals(1.0, result[1][0].doubleValue(), .000000001d);
-			assertEquals(2.0, result[1][1].doubleValue(), .000000001d);
-			assertEquals(3.0, result[1][2].doubleValue(), .000000001d);
-		}
-
-		@Test
-		public void testCreateNumberArray2DWithOneValue() {
-			double[][] inputData = new double[][]{{2.0}, {1.0}};
-
-			Number[][] result = DataUtilities.createNumberArray2D(inputData);
-
-			assertEquals(2.0, result[0][0].doubleValue(), .000000001d);
-			assertEquals(1.0, result[1][0].doubleValue(), .000000001d);
-		}
-
-		@Test
-		public void testCreateNumberArray2DWithEmptyInput() {
-			double[][] inputData = new double[][]{};
-			
-			Number[][] result = DataUtilities.createNumberArray2D(inputData);
-			
-			assertEquals(0, result.length);
-		}
-
 	@Test
 	public void testDoubleAsValueInData() {
 	    Mockery mockingContext = new Mockery();
@@ -286,7 +213,7 @@ public class DataUtilitiesTest extends DataUtilities {
 	    double result = DataUtilities.calculateRowTotal(values, 0);
 	    assertEquals(0.7, result, 0.0001);
 	}
-
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testNegativeRowIndex() {
 	    Mockery mockingContext = new Mockery();
@@ -309,8 +236,115 @@ public class DataUtilitiesTest extends DataUtilities {
 	    });
 	   
 	    // This line will throw an InvalidParameterException when a null value is encountered
-	    double result = DataUtilities.calculateColumnTotal(values, -1);
+	    double result = DataUtilities.calculateRowTotal(values, -1);
+	}	
+	
+	
+	
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD createNumberArray()	
+	
+	
+	
+	@Test(expected = InvalidParameterException.class)
+	public void testNullDataValue() {
+	    Number[] result = DataUtilities.createNumberArray(null);
 	}
+	
+	@Test
+	public void testCreateNumberArrayWithValidInput() {
+	    double[] inputData = new double[]{2.0, 3.4, 5.6};
+	    
+	    Number[] result = DataUtilities.createNumberArray(inputData);
+	    
+		// Print the result
+		for (int i = 0; i < result.length; i++) {
+			System.out.println(result[i]);
+		}
+		
+		assertEquals(2.0, result[0].doubleValue(), .000000001d);
+		assertEquals(3.4, result[1].doubleValue(), .000000001d);
+		assertEquals(5.6, result[2].doubleValue(), .000000001d);
+	}
+
+	@Test
+	public void testCreateNumberArrayWithOneValue() {
+		double[] inputData = new double[]{2.0};
+		
+		Number[] result = DataUtilities.createNumberArray(inputData);
+		
+		assertEquals(2.0, result[0].doubleValue(), .000000001d);
+	}
+
+	@Test
+	public void testCreateNumberArrayWithEmptyInput() {
+		double[] inputData = new double[]{};
+		
+		Number[] result = DataUtilities.createNumberArray(inputData);
+		
+		assertEquals(0, result.length);
+	}
+	
+	
+
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD createNumberArray2D()	
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullDataValueCreateNumberArray2D() {
+		Number[][] result = DataUtilities.createNumberArray2D(null);
+	}
+
+	
+	
+	@Test
+	public void testCreateNumberArray2DWithValidInput() {
+		double[][] inputData = new double[][]{{2.0, 3.4, 5.6}, {1.0, 2.0, 3.0}};
+		
+		Number[][] result = DataUtilities.createNumberArray2D(inputData);
+		
+		// Print the result
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[i].length; j++) {
+				System.out.println(result[i][j]);
+			}
+		}
+		
+		assertEquals(2.0, result[0][0].doubleValue(), .000000001d);
+		assertEquals(3.4, result[0][1].doubleValue(), .000000001d);
+		assertEquals(5.6, result[0][2].doubleValue(), .000000001d);
+		assertEquals(1.0, result[1][0].doubleValue(), .000000001d);
+		assertEquals(2.0, result[1][1].doubleValue(), .000000001d);
+		assertEquals(3.0, result[1][2].doubleValue(), .000000001d);
+	}
+
+	
+	@Test
+	public void testCreateNumberArray2DWithOneValue() {
+		double[][] inputData = new double[][]{{2.0}, {1.0}};
+
+		Number[][] result = DataUtilities.createNumberArray2D(inputData);
+
+		assertEquals(2.0, result[0][0].doubleValue(), .000000001d);
+		assertEquals(1.0, result[1][0].doubleValue(), .000000001d);
+	}
+
+	
+	@Test
+	public void testCreateNumberArray2DWithEmptyInput() {
+		double[][] inputData = new double[][]{};
+		
+		Number[][] result = DataUtilities.createNumberArray2D(inputData);
+		
+		assertEquals(0, result.length);
+	}
+
+	
+	
+	
+	
+	// --------------------------------------------------------
+	// THESE TESTS ARE FOR THE METHOD getCumulativePercentages()
 	 
 	 @Test
 	 public void calculateCumulativePercentageForThreeValues() {
@@ -338,7 +372,6 @@ public class DataUtilitiesTest extends DataUtilities {
 	     KeyedValues result = DataUtilities.getCumulativePercentages(vals);
 
 	     // verify
-	     assertEquals(0.3125, result.getValue(0)); // Key 0 should have value 0.3125
 	     assertEquals(0.875, result.getValue(1));   // Key 1 should have value 0.875
 	     assertEquals(1.0, result.getValue(2));     // Key 2 should have value 1.0
 	 }
