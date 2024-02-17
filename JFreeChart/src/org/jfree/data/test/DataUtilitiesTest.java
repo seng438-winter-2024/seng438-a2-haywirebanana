@@ -178,6 +178,11 @@ public class DataUtilitiesTest extends DataUtilities {
 	    double result = DataUtilities.calculateRowTotal(values, 0);
 	    assertEquals(5, result, 0.0001);
 	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testNullDataValue() {
+	    Number[] result = DataUtilities.createNumberArray(null);
+	}
 	
 	  @Test
 	    public void testCreateNumberArrayWithValidInput() {
